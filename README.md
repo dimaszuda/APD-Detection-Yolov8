@@ -11,7 +11,7 @@ I use dataset from kaggle "[Construction Site Safety Image Dataset Roboflow](htt
 
 ## How to run application
 
-- Clone this repo by typing `git clone`
+- clone this repo by typing `git clone`
 - Open the terminal and go to dashboard directory
 - Type `python -m venv .venv` and hit enter
 - Type `.venv/Scripts/activate` and hit enter for `Windows`
