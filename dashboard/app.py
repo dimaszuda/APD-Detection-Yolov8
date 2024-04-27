@@ -5,7 +5,8 @@ from corpus import (
     MODEL_PATH,
     VIDEO_SOURCE,
     FILE_TYPE,
-    IMAGE_TYPE
+    IMAGE_TYPE,
+    CONFIDENCE_THRESHOLD
 )
 
 
@@ -33,11 +34,11 @@ if file_type == "Image":
         with col1:
             handler.show_original_image(source_img)
         with col2:
-            handler.detect_image(source_img, model)
+            handler.detect_image(source_img,CONFIDENCE_THRESHOLD, model)
 elif file_type == 'Video':
     with st.sidebar.expander("Video Source"):
         video_source = st.sidebar.radio(
             "Select Video Source:", VIDEO_SOURCE
         )
-    handler.inference_video(video_source, model)
+    handler.inference_video(video_source, CONFIDENCE_THRESHOLD, model)
         

@@ -23,6 +23,7 @@ def show_tracker():
         return is_dipslay_tracker, None
 
 def display_detected_frames(
+        conf: int,
         model,
         st_frame, 
         image, 
@@ -33,9 +34,9 @@ def display_detected_frames(
 ) -> None:
     image = cv2.resize(image, (width, height))
     if is_display_tracking:
-        res = model.track(image, persist=True, tracker=tracker)
+        res = model.track(image, conf=conf, persist=True, tracker=tracker)
     else:
-        res = model.predict(image)
+        res = model.predict(image, conf=conf)
 
     res_plotted = res[0].plot()
     st_frame.image(
@@ -55,12 +56,12 @@ def show_original_image(source_img: Path) -> None:
     except Exception as e:
         st.error(f"Error Opening Image: \n {e}")
 
-def detect_image(upload_image: Path, model) -> None: # check if this function is worked or not
+def detect_image(upload_image: Path, conf: int, model) -> None: # check if this function is worked or not
     try:
         if upload_image:
             if st.sidebar.button("Detect Objects"):
                 image = Image.open(upload_image)
-                results = model.predict(image)
+                results = model.predict(image, conf=conf)
                 for i, result in enumerate(results):
                     im_bgr = result.plot()
                     im_rgb = Image.fromarray(im_bgr[..., ::-1])
@@ -73,7 +74,7 @@ def detect_image(upload_image: Path, model) -> None: # check if this function is
     except Exception as e:
         st.sidebar.error(f"Unexpected Error: {e}")
     
-def detect_video(video_source: str, model) -> None:
+def detect_video(video_source: str, conf: int, model) -> None:
     try:
         if video_source:
             is_display_tracker, tracker = show_tracker()
@@ -88,7 +89,8 @@ def detect_video(video_source: str, model) -> None:
                     success, image = video_cap.read()
                     if success:
                         display_detected_frames(
-                            model,
+                            conf=conf,
+                            model=model,
                             st_frame=st_frame,
                             image=image,
                             width=width,
@@ -103,20 +105,20 @@ def detect_video(video_source: str, model) -> None:
     except Exception as e:
         st.sidebar.error(f"Error Detecting Video: {e}")
 
-def inference_video(video_source: str, model) -> None:
+def inference_video(video_source: str, conf: int, model) -> None:
     try:
         if video_source == 'Sample':
             sample_video = st.selectbox(
                 "Choose a sample video", SAMPLE_VIDEO.keys()
             )
-            detect_video(SAMPLE_VIDEO.get(sample_video), model)
+            detect_video(SAMPLE_VIDEO.get(sample_video), conf, model)
         elif video_source == 'Local':
             upload_video = st.file_uploader("Upload your video")
             if upload_video:
                 temp_video_file = NamedTemporaryFile(delete=False)
                 temp_video_file.write(upload_video.read())
                 video_name = temp_video_file.name
-                detect_video(video_name, model)
+                detect_video(video_name, conf, model)
         elif video_source == 'Youtube':
             youtube_url = st.sidebar.text_input("Input Youtube URL")
             if youtube_url:
@@ -126,7 +128,7 @@ def inference_video(video_source: str, model) -> None:
                     progressive=True,
                     file_extension="mp4"
                 ).first().download()
-                detect_video(stream, model)
+                detect_video(stream, conf, model)
                 os.remove(stream)
     except Exception as e:
         st.sidebar.error(f"Error Loading Video \n {e}")
