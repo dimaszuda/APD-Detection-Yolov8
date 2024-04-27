@@ -1,10 +1,10 @@
 # APD-Detection-Yolov8
 
 ## About
-This is a simple AI Application to detect Personel Protective Equipment (PPE) or <i> Alat Pelindung Diri <i>. I fine-tuned Yolov8n model with dataset to make model better detect PPE. I use streamlit framework as a dashboard application. This application can detect PPE through image or video even a YouTube video. You can use your own file or the sample data given.
+This is a simple AI Application to detect Personel Protective Equipment (PPE) or <i> Alat Pelindung Diri </i>. I fine-tuned Yolov8n model with dataset to make model better detect PPE. I use streamlit framework as a dashboard application. This application can detect PPE through image or video even a YouTube video. You can use your own file or the sample data given.
 
 ## Dataset
-I am using dataset from kaggle "[Construction Site Safety Image Dataset Roboflow] (https://www.kaggle.com/datasets/snehilsanyal/construction-site-safety-image-dataset-roboflow)". I use this dataset because this dataset have been annotated and have enough label to detect PPE. 
+I am using dataset from kaggle "[Construction Site Safety Image Dataset Roboflow](https://www.kaggle.com/datasets/snehilsanyal/construction-site-safety-image-dataset-roboflow)". I use this dataset because this dataset have been annotated and have enough label to detect PPE. 
 
 ## Preview Dashboard
 ![[Preview Demo Video Detection]](./img/preview.png)
