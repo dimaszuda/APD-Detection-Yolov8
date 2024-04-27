@@ -120,7 +120,7 @@ def inference_video(video_source: str, conf: int, model) -> None:
                 video_name = temp_video_file.name
                 detect_video(video_name, conf, model)
         elif video_source == 'Youtube':
-            youtube_url = st.sidebar.text_input("Input Youtube URL")
+            youtube_url = st.text_input("Input Youtube URL")
             if youtube_url:
                 ssl._create_default_https_context = ssl._create_unverified_context
                 youtube_video = YouTube(youtube_url)
